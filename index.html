@@ -46,7 +46,8 @@
         
                 <script> 
             // Link to spreadsheet
-            var url = "https://spreadsheets.google.com/feeds/list/1u3uLSpMRz_c1cQMHgzBhpLa9fJUr9s8xkRZZWWGrXqU/od6/public/values?alt=json";   
+            var url = "https://spreadsheets.google.com/feeds/list/1u3uLSpMRz_c1cQMHgzBhpLa9fJUr9s8xkRZZWWGrXqU/od6/public/values?alt=json";  
+            var url2 = "https://docs.google.com/spreadsheets/d/1u3uLSpMRz_c1cQMHgzBhpLa9fJUr9s8xkRZZWWGrXqU/gviz/tq?&tq=SELECT%20*%20WHERE%20A%20=%20%27Charleston%27&guid=2";
             
             function list(root) {
                 var feed = root.feed;
@@ -65,7 +66,7 @@
                 document.getElementById("agenda").innerHTML = html.join("");
             }
             
-            $.getJSON(url, function(data) {
+            $.getJSON(url2, function(data) {
                 var entry = data.feed.entry;
                 $(entry).each(function(){
                     // Column names are name, age, etc.
