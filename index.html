@@ -26,6 +26,7 @@
         
         
         <div class="results"></div>
+        <div id="cityImage"></div>
         
         <div id="agenda"></div>
 
@@ -44,7 +45,7 @@
             ga('create','UA-XXXXX-X','auto');ga('send','pageview');
         </script>
         
-                <script> 
+        <script> 
             // Link to spreadsheet
             var url = "https://spreadsheets.google.com/feeds/list/1u3uLSpMRz_c1cQMHgzBhpLa9fJUr9s8xkRZZWWGrXqU/od6/public/values?alt=json";  
             
@@ -67,10 +68,13 @@
             
             $.getJSON(url, function(data) {
                 var entry = data.feed.entry;
+                var cityImage;
                 $(entry).each(function(){
                     // Column names are name, age, etc.
                     if (this.gsx$location.$t == 'Charleston') {
+                        cityImage = this.gsx$location.$t;
                         $('.results').prepend('<h2>'+this.gsx$location.$t+'</h2><p>'+this.gsx$image.$t+'</p>');
+                        document.getElementById('cityImage').setAttribute('src', cityImage);
                     }
                     
                 });
