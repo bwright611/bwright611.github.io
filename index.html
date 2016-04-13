@@ -14,30 +14,24 @@
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
         <script>
-            var getJSON = function(url) {
-                return new Promise(function(resolve, reject) {
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('get', url, true);
-                    xhr.responseType = 'json';
-                    xhr.onload = function() {
-                    var status = xhr.status;
-                    if (status == 200) {
-                        resolve(xhr.response);
-                    } else {
-                        reject(status);
-                    }
-                    };
-                    xhr.send();
-                });
-                };
-
-                getJSON('https://spreadsheets.google.com/feeds/list/1u3uLSpMRz_c1cQMHgzBhpLa9fJUr9s8xkRZZWWGrXqU/od6/public/values?alt=json').then(function(data) {
-                    alert('Your Json result is:  ' + data.result); //you can comment this, i used it to debug
-
-                    result.innerText = data.result; //display the result in an HTML element
-                }, function(status) { //error detection....
-                alert('Something went wrong.');
-                });
+ 
+            // ID of the Google Spreadsheet
+            var spreadsheetID = "SPREADSHEET KEY";
+            
+            // Make sure it is public or set to Anyone with link can view 
+            var url = "https://spreadsheets.google.com/feeds/list/1u3uLSpMRz_c1cQMHgzBhpLa9fJUr9s8xkRZZWWGrXqU/od6/public/values?alt=json";
+            
+            $.getJSON(url, function(data) {
+            
+            var entry = data.feed.entry;
+            
+            $(entry).each(function(){
+                // Column names are name, age, etc.
+                $('.results').prepend('<h2>'+this.gsx$name.$t+'</h2><p>'+this.gsx$age.$t+'</p>');
+            });
+            
+            });
+        
         </script>
             
     </head>
@@ -47,7 +41,12 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+        <div> 
+            <p>Hello world! This is HTML5 Boilerplate.</p>
+        </div>
+        
+        
+        <div class="results"></div>
 
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
